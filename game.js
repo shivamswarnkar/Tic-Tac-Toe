@@ -3,27 +3,33 @@
  *situation of the game.
 */ 
 
-function mark(curr, user){
-	if(user == null){
-		curr.innerHTML = "X";
-		curr.style.color = "green";
-		curr.value = "disable";
-		//deactive(true);
-	}
-
-}
-
 function deactive(bool){
 	var places = document.getElementsByClassName("place");
 	for (var i=0;  i < places.length; ++i){
-		places[i].disabled = bool;
+		if(places[i].value != "disable"){
+			places[i].disabled = bool;
+		}
 	}
 	
 }
 
-
+function markPosition(pos, color, char){
+	var curr = document.getElementById(pos.pos);
+	curr.style.color = color;
+	curr.innerHTML = char;
+	curr.value = "disable";
+	curr.disabled = true;
+	deactive(false);
+}
 
 /*------AI--------*/
+
+var GAME = {
+	firstGo : null,
+	userPlayed : null,
+	userPos : [],
+	compPos : []
+};
 
 
 /*----Function returns a positon object for the 9 positions*/
@@ -90,3 +96,11 @@ function diff(char){
 
 
 /*------AI--------*/
+
+
+/*---AI follows this algorithm when plays first*/
+function firstGo(color, char){
+	markPosition(position(), color, char);
+
+}
+

@@ -24,3 +24,26 @@ button{
 	float: left;
 	font-size: 100px;
 }
+
+
+#notification{
+	width: 500px;
+	min-height: 30px;
+	background-color: white;
+	color:black;
+	font-size: 2em;
+	line-height: 50px;
+	text-align: center;
+	margin: auto;
+	margin-top: 50px;
+	visibility: hidden;
+}
+
+#startButton{
+	margin:auto;
+	font-size: 2em;
+	width: 100px;
+	height: 100px;
+	margin-left: 45%;
+
+}
