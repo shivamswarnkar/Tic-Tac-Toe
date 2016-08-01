@@ -24,12 +24,6 @@ function markPosition(pos, color, char){
 
 /*------AI--------*/
 
-var GAME = {
-	firstGo : null,
-	userPlayed : null,
-	userPos : [],
-	compPos : []
-};
 
 
 /*----Function returns a positon object for the 9 positions*/
@@ -56,11 +50,11 @@ function position(pos){ //pos should be an array
 
 }
 
-/*Returns opposite corner for a given corener or a furthest corner for given edge. Nothing returns
+/*Returns opposite corner for a given corener or a furthest corner for given edge. center is returned
 for given center.
 */
 function counterCorner(pos){
-	if(pos.type == "center"){return;}
+	if(pos.type == "center"){return pos;}
 
 	else if(pos.type == "edge"){ //returns furthest corner
 		var side = opp(pos.pos[2]);  //sends L or R, gets opposite
