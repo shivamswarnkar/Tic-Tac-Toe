@@ -70,6 +70,7 @@ function write(message){
 /*---checks if won*/
 function won(user){
 	curr=0;
+	var match = [];
 	for(var i=0; i < WIN.length; ++i){
 		for( var j=0; WIN[i].length; ++j){
 			if(user.indexOf(WIN[i][j]) == -1){
@@ -77,11 +78,20 @@ function won(user){
 				break;
 			}
 			curr +=1;
+			match.push(WIN[i][j]);
 		}
-		if(curr ==3){return true;}
-		else{curr =0;}
+		if(curr ==3){ color(match); return true;}
+		else{curr =0; match = [];}
 	}
 	return false;
+}
+
+function color(match){
+	for(var i=0; i<match.length; ++i){
+		curr =document.getElementById(match[i]).style;
+		curr.backgroundColor = "yellow";
+	}
+
 }
 
 /*--------------------------------------------------------------*/

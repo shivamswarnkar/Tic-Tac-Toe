@@ -125,6 +125,7 @@ function compTurn(){
 	var result = canWin(GAME.comp); //checks if comp can win in one move, and then makes that move.
 	if(result){
 		markPosition(result, GAME.comp.color, GAME.comp.char);
+		//won(GAME.comp.pos);
 		write("looks like I win!!");
 		deactive(true);
 	}
