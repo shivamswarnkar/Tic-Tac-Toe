@@ -126,6 +126,7 @@ function compTurn(){
 	if(result){
 		markPosition(result, GAME.comp.color, GAME.comp.char);
 		write("looks like I win!!");
+		deactive(true);
 	}
 	else if(GAME.firstGo){
 		var compPos;
@@ -141,6 +142,10 @@ function compTurn(){
 			else if(GAME.stage==4){
 				compPos = canWin(GAME.user);
 				markPosition(compPos, GAME.comp.color, GAME.comp.char);
+				GAME.comp.pos.push(compPos.pos);
+				GAME.comp.posObject.push(compPos);
+				write("hmm, I think you're in truble!");
+
 			}
 
 		}
