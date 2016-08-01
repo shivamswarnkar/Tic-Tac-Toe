@@ -17,7 +17,8 @@ var GAME = {
 	comp: {
 		color: null,
 		char : null,
-		pos : []
+		pos : [],
+		posObject : []
 	},
 	
 	user : {
@@ -89,7 +90,7 @@ function mark(curr, user){
 	if(user == null){ //playing v/s AI
 		curr.innerHTML = "X";
 		curr.style.color = "green";
-		curr.value = "disable";
+		curr.value = "filled";
 		curr.disabled = true;
 		GAME.stage += 1;
 		GAME.user.pos.push(curr.id);
