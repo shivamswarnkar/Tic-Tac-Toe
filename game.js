@@ -18,6 +18,7 @@ function deactive(bool){
 }
 
 function markPosition(pos, color, char){
+	console.log(pos);
 	var curr = document.getElementById(pos.pos);
 	curr.style.color = color;
 	curr.innerHTML = char;
@@ -79,7 +80,13 @@ function counterCorner(pos){
 	else if(pos.type == "edge"){ //returns furthest corner
 		var side = opp(pos.pos[2]);  //sends L or R, gets opposite
 		var diffSide = diff(pos.pos[2]);
-		return [ position ( "", [diffSide[0], side] ), position("", [diffSide[1], side]) ] ;
+		if(side=='L'|| side=='R'){
+			return [ position ( "", [diffSide[0], side] ), position("", [diffSide[1], side]) ] ;
+		}
+		else{
+			return [ position ( "", [side, diffSide[0]] ), position("", [side, diffSide[1]]) ] ;
+		}
+
 	}
 
 	else{ //returns opposite corner
@@ -125,8 +132,8 @@ function compTurn(){
 	var result = canWin(GAME.comp); //checks if comp can win in one move, and then makes that move.
 	if(result){
 		markPosition(result, GAME.comp.color, GAME.comp.char);
-		//won(GAME.comp.pos);
-		write("looks like I win!!");
+		GAME.comp.pos.push(result.pos);
+		GAME.comp.posObject.push(result);
 		deactive(true);
 	}
 	else if(GAME.firstGo){

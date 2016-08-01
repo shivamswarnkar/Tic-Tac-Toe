@@ -80,7 +80,7 @@ function won(user){
 			curr +=1;
 			match.push(WIN[i][j]);
 		}
-		if(curr ==3){ color(match); return true;}
+		if(curr ==3){ color(match); deactive(true); return true;}
 		else{curr =0; match = [];}
 	}
 	return false;
