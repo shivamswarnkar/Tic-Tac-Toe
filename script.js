@@ -11,14 +11,24 @@ var WIN = [
 
 var GAME = {
 	firstGo : null,
+	stage : 0,
 	userPlayed : null,
-	userPos : [],
-	compPos : []
+	
+	comp: {
+		color: null,
+		char : null,
+		pos : []
+	},
+	
+	user : {
+		color: null,
+		char : null,
+		pos : [],
+		posObject : []
+	}
 };
 
-
 deactive(true);
-
 
 
 
@@ -27,6 +37,7 @@ deactive(true);
 /*----------------------------------------------------------------------*/
 
 function hide(){
+	GAME.firstGo = true;
 	document.getElementById("startButton").style.visibility = "hidden";
 	write("I'm going first!, now your turn!");
 	document.getElementById("notification").style.visibility = "visible";
@@ -36,40 +47,23 @@ function hide(){
 /*-------------------------------------------------------------------------*/
 
 function play(){
+	GAME.user.color = "green";
+	GAME.user.char = "X";
+
+	GAME.comp.color = "red";
+	GAME.comp.char = "O";
 	hide();
-	firstGo("red", "O");
+	if(GAME.firstGo){
+		firstGo();
+	}
+	else{
+
+	}
 }
 
 function write(message){
 	var bar = document.getElementById("notification");
 	bar.innerHTML = message;
-}
-
-function compTurn(){
-	
-
-
-}
-
-/*--------------------------------------------------------------*/
-
-function mark(curr, user){
-	if(user == null){
-		curr.innerHTML = "X";
-		curr.style.color = "green";
-		curr.value = "disable";
-		curr.disabled = true;
-		GAME.userPos.push(curr.id);
-		if(won(GAME.userPos)){
-			write("You won!");
-		}
-		else{
-			write("hmm, let me think!")
-		}
-		//deactive(true);
-		compTurn();
-	}
-
 }
 
 /*---checks if won*/
@@ -87,4 +81,32 @@ function won(user){
 		else{curr =0;}
 	}
 	return false;
+}
+
+/*--------------------------------------------------------------*/
+
+function mark(curr, user){
+	if(user == null){ //playing v/s AI
+		curr.innerHTML = "X";
+		curr.style.color = "green";
+		curr.value = "disable";
+		curr.disabled = true;
+		GAME.stage += 1;
+		GAME.user.pos.push(curr.id);
+		GAME.user.posObject.push(position(curr.id));
+		if(won(GAME.user.pos)){
+			write("You won!");
+			//congrats();
+			return;
+		}
+		else{
+			write("hmm, let me think!")
+		}
+		deactive(true);
+		compTurn();
+		if(won(GAME.comp.pos)){
+			write("Ah, I win! ;) ");
+		}
+	}
+
 }

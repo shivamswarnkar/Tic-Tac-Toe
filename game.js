@@ -3,6 +3,10 @@
  *situation of the game.
 */ 
 
+function lol(){
+	console.log('klo');
+}
+
 function deactive(bool){
 	var places = document.getElementsByClassName("place");
 	for (var i=0;  i < places.length; ++i){
@@ -28,22 +32,38 @@ function markPosition(pos, color, char){
 
 /*----Function returns a positon object for the 9 positions*/
 
-function position(pos){ //pos should be an array
+function position(str, pos){ //pos should be an array
 	var newPos = new Object();
-	if(pos == null || pos.length==0){
-		newPos.type = "center";
-		newPos.pos = "C";
-	}
-	else if(pos.length == 1){
-		newPos.type = "edge";
-		newPos.pos = 'E_'+ pos[0][0].toUpperCase();
+	if(str){
+		newPos.pos = str;
+		if(str.length ==1){
+			newPos.type = 'center';
+		}
+
+		else if(str.length == 3){
+			newPos.type = "edge";
+		}
+		else{
+			newPos.type = "corner";
+		}
 
 	}
-
 	else{
-		newPos.type = "corner";
-		newPos.pos = 'C_' + pos[0][0].toUpperCase() + 
-		pos[1][0].toUpperCase();
+		if(pos == null || pos.length==0){
+			newPos.type = "center";
+			newPos.pos = "C";
+		}
+		else if(pos.length == 1){
+			newPos.type = "edge";
+			newPos.pos = 'E_'+ pos[0][0].toUpperCase();
+
+		}
+
+		else{
+			newPos.type = "corner";
+			newPos.pos = 'C_' + pos[0][0].toUpperCase() + 
+			pos[1][0].toUpperCase();
+		}
 	}
 
 	return newPos;
@@ -54,7 +74,7 @@ function position(pos){ //pos should be an array
 for given center.
 */
 function counterCorner(pos){
-	if(pos.type == "center"){return pos;}
+	if(pos.type == "center"){return [pos];}
 
 	else if(pos.type == "edge"){ //returns furthest corner
 		var side = opp(pos.pos[2]);  //sends L or R, gets opposite
@@ -93,8 +113,47 @@ function diff(char){
 
 
 /*---AI follows this algorithm when plays first*/
-function firstGo(color, char){
-	markPosition(position(), color, char);
+function firstGo(){
+	var center = position();
+	markPosition(center, GAME.comp.color, GAME.comp.char); //center first mark
+	GAME.comp.pos.push(center.pos);
+	GAME.comp.pos.push(center);
+	GAME.stage += 1;
+}
+
+function compTurn(){
+	var result = canWin(); //checks if comp can win in one move, and then makes that move.
+	if(result){
+		markPosition(result, GAME.comp.color, GAME.comp.char);
+	}
+	else if(GAME.firstGo){
+		if(GAME.user.posObject[0].type == "edge"){
+			if(GAME.stage ==2){
+				var compPos = counterCorner(GAME.user.posObject[0]);
+				console.log(compPos);
+				compPos = compPos[Math.floor(Math.random()*compPos.length)];
+				console.log(compPos);
+				markPosition(compPos, GAME.comp.color, GAME.comp.char);
+			}
+
+		}
+		else{
+
+		}
+		if(GAME.stage == 2){}
+		else if(GAME.stage == 4){}
+		else if(GAME.stage == 6){}
+		else if(GAME.stage == 8){}
+	}
+	
+
+	GAME.stage += 1;
+	deactive(false);
+
 
 }
 
+function canWin(){
+
+
+}
