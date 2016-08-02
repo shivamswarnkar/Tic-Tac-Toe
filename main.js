@@ -22,6 +22,7 @@ var GAME = {
 	},
 	
 	user : {
+		name : null,
 		color: null,
 		char : null,
 		pos : [],
@@ -38,11 +39,6 @@ deactive(true);
 /*----------------------------------------------------------------------*/
 
 function hide(){
-	//GAME.firstGo = true;
-	//write("I'm going first!, now your turn!");
-	
-	GAME.firstGo = false;
-	write("Well then, first your turn!");
 	document.getElementById("startButton").style.visibility = "hidden";
 	document.getElementById("notification").style.visibility = "visible";
 }
@@ -51,16 +47,14 @@ function hide(){
 /*-------------------------------------------------------------------------*/
 
 function play(){
-	GAME.user.color = "green";
-	GAME.user.char = "X";
-
-	GAME.comp.color = "red";
-	GAME.comp.char = "O";
+	
 	hide();
 	if(GAME.firstGo){
+		write("I'm going first!, now your turn "+GAME.user.name+"!");
 		firstGo();
 	}
 	else{
+		write("Well then, first your turn "+GAME.user.name+"!");
 		deactive(false);
 
 	}
@@ -102,8 +96,8 @@ function color(match){
 
 function mark(curr, user){
 	if(user == null){ //playing v/s AI
-		curr.innerHTML = "X";
-		curr.style.color = "green";
+		curr.innerHTML = GAME.user.char;
+		curr.style.color = GAME.user.color;
 		curr.value = "filled";
 		curr.disabled = true;
 		
@@ -114,24 +108,24 @@ function mark(curr, user){
 		GAME.left.splice(GAME.left.indexOf(curr.id), 1);
 		
 		if(won(GAME.user.pos)){
-			write("You won!");
+			write("You won "+GAME.user.name+"!");
 			//congrats();
 			return;
 		}
 		else{
-			write("hmm, let me think!")
+			write("hmm, let me think "+GAME.user.name+"!")
 		}
 		deactive(true);
 		compTurn();
 		if(won(GAME.comp.pos)){
-			write("Ah, I win! ;) ");
+			write("Ah, I win "+GAME.user.name+"! " +";) ");
 		}
 		else if(GAME.left <= 1){
-			write("Seems like it's a tie");
+			write("Seems like it's a tie " +GAME.user.name);
 			deactive(true);
 		}
 		else{
-			write("your turn!");
+			write("your turn "+GAME.user.name+"!");
 		}
 	}
 
