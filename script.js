@@ -13,7 +13,7 @@ var GAME = {
 	firstGo : null,
 	stage : 0,
 	userPlayed : null,
-	
+	left : ["C_UL", "E_U", "C_UR", "E_L", "C", "E_R", "C_DL", "E_D", "C_DR"],
 	comp: {
 		color: null,
 		char : null,
@@ -102,9 +102,13 @@ function mark(curr, user){
 		curr.style.color = "green";
 		curr.value = "filled";
 		curr.disabled = true;
+		
+		//update game object about changes
 		GAME.stage += 1;
 		GAME.user.pos.push(curr.id);
 		GAME.user.posObject.push(position(curr.id));
+		GAME.left.splice(GAME.left.indexOf(curr.id), 1);
+		
 		if(won(GAME.user.pos)){
 			write("You won!");
 			//congrats();
@@ -117,6 +121,13 @@ function mark(curr, user){
 		compTurn();
 		if(won(GAME.comp.pos)){
 			write("Ah, I win! ;) ");
+		}
+		else if(GAME.left <= 1){
+			write("Seems like it's a tie");
+			deactive(true);
+		}
+		else{
+			write("your turn!");
 		}
 	}
 
