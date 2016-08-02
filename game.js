@@ -3,9 +3,13 @@
  *situation of the game.
 */ 
 
-function lol(){
-	console.log('klo');
-}
+/*
+function start(){
+	console.log("working");;
+	document.getElementById("content").style.visibility = "visible";
+	document.getElementById("initial").style.visibility = "hidden";
+	play();
+}*/
 
 function deactive(bool){
 	var places = document.getElementsByClassName("place");
@@ -19,11 +23,16 @@ function deactive(bool){
 
 function markPosition(pos, color, char){
 	var curr = document.getElementById(pos.pos);
+	if(curr.value=="filled"){return;}
 	curr.style.color = color;
 	curr.innerHTML = char;
 	curr.value = "filled";
 	curr.disabled = true;
 	GAME.left.splice(GAME.left.indexOf(pos.pos), 1);
+	
+	GAME.comp.pos.push(pos.pos);
+	GAME.comp.posObject.push(pos);
+	
 	deactive(false);
 }
 
@@ -97,6 +106,11 @@ function counterCorner(pos){
 		result = GAME.left;
 		console.log(GAME.left);
 	}
+	for(var i=0; i<result.length; ++i){
+		if(GAME.left.indexOf(result[i]) == -1){
+			result.splice(i,1);
+		}
+	}
 	return result;
 
 }
@@ -129,8 +143,6 @@ function diff(char){
 function firstGo(){
 	var center = position();
 	markPosition(center, GAME.comp.color, GAME.comp.char); //center first mark
-	GAME.comp.pos.push(center.pos);
-	GAME.comp.posObject.push(center);
 	GAME.stage += 1;
 }
 
@@ -138,8 +150,6 @@ function compTurn(){
 	var result = canWin(GAME.comp) || canWin(GAME.user); //checks if comp can win in one move, and then makes that move.
 	if(result){
 		markPosition(result, GAME.comp.color, GAME.comp.char);
-		GAME.comp.pos.push(result.pos);
-		GAME.comp.posObject.push(result);
 		deactive(true);
 	}
 	else if(GAME.firstGo){
@@ -148,26 +158,31 @@ function compTurn(){
 			compPos = counterCorner(GAME.user.posObject[0]);
 			compPos = compPos[Math.floor(Math.random()*compPos.length)];
 			markPosition(compPos, GAME.comp.color, GAME.comp.char);
-			GAME.comp.pos.push(compPos.pos);
-			GAME.comp.posObject.push(compPos);
 			write("Your turn!");
 		}
-		else if(GAME.stage>=4){
-			compPos = canWin(GAME.user) || canWin(GAME.comp, 2);
+				
+	}
+
+	else if(GAME.stage>=3){
+			compPos = canWin(GAME.user) || position(leftCorner())|| canWin(GAME.comp, 2);
 			if(!compPos){
 				compPos = counterCorner(GAME.user.posObject[1]);
+				console.log(compPos);
 				compPos = compPos[Math.floor(Math.random()*compPos.length)];
 			}
 			markPosition(compPos, GAME.comp.color, GAME.comp.char);
-			GAME.comp.pos.push(compPos.pos);
-			GAME.comp.posObject.push(compPos);
 			write("hmm, I think you're in truble!");
 		}
-				
-	}	
-		
-	else {				//if user decides to go first!
 
+	else {				//if user decides to go first!
+		if(GAME.stage==1){
+			if(document.getElementById("C").value != "filled"){
+				markPosition(position(), GAME.comp.color, GAME.comp.char);
+			}
+			else{
+				markPosition(position(leftCorner()), GAME.comp.color, GAME.comp.char);
+			}
+		}
 	}
 	
 
@@ -209,4 +224,14 @@ function uncommon(x, y){//x length should be greater or equal than y
 			return x[i];
 		}
 	}
+}
+
+//reutrns any random left corner
+function leftCorner(){
+	for(var i=0; i < GAME.left.length; ++i){
+		if(GAME.left[i].includes("C_")){
+			return GAME.left[i];
+		}
+	}
+	return null;
 }
