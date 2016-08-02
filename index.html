@@ -7,27 +7,30 @@
 	<script src="game.js"></script>
 </head>
 <body>
-	<div id="game">
-	<button id="C_UL" class="place"onclick="mark(this)"></button>
-	<button id="E_U" class="place" onclick="mark(this)"></button>
-	<button id="C_UR" class="place" onclick="mark(this)"></button>
-	<button id="E_L" class="place" onclick="mark(this)"></button>
-	<button id="C" class="place" onclick="mark(this)"></button>
-	<button id="E_R" class="place" onclick="mark(this)"></button>
-	<button id="C_DL" class="place" onclick="mark(this)"></button>
-	<button id="E_D" class="place" onclick="mark(this)"></button>
-	<button id="C_DR" class="place" onclick="mark(this)"></button>
-	</div>
+	<!--<div id="initial">
+		<button id="submit" ondblclick="start()">Submit</button>
+	</div>-->
+		<div id="content">
+		<div id="game">
+		<button id="C_UL" class="place"onclick="mark(this)"></button>
+		<button id="E_U" class="place" onclick="mark(this)"></button>
+		<button id="C_UR" class="place" onclick="mark(this)"></button>
+		<button id="E_L" class="place" onclick="mark(this)"></button>
+		<button id="C" class="place" onclick="mark(this)"></button>
+		<button id="E_R" class="place" onclick="mark(this)"></button>
+		<button id="C_DL" class="place" onclick="mark(this)"></button>
+		<button id="E_D" class="place" onclick="mark(this)"></button>
+		<button id="C_DR" class="place" onclick="mark(this)"></button>
+		</div>
 
-	<div class = "bar" id="notification">
-		
-	</div>
+		<div class = "bar" id="notification"><!--AI will give messages here!--></div>
 
-	<button  onclick="play()" id="startButton">
-		Start
-	</button>
-	
+		<button  onclick="play()" id="startButton">
+			Start
+		</button>
+	</div>	
 
-<script src="script.js"></script>
+	<script scr="script.js"></script>
+	<script src="main.js"></script>
 <body>
 </html>
