@@ -23,6 +23,7 @@ function markPosition(pos, color, char){
 	curr.innerHTML = char;
 	curr.value = "filled";
 	curr.disabled = true;
+	GAME.left.splice(GAME.left.indexOf(pos.pos), 1);
 	deactive(false);
 }
 
@@ -74,23 +75,29 @@ function position(str, pos){ //pos should be an array
 for given center.
 */
 function counterCorner(pos){
-	if(pos.type == "center"){return [pos];}
+	var result;
+	if(pos.type == "center"){result = [pos];}
 
 	else if(pos.type == "edge"){ //returns furthest corner
 		var side = opp(pos.pos[2]);  //sends L or R, gets opposite
 		var diffSide = diff(pos.pos[2]);
 		if(side=='L'|| side=='R'){
-			return [ position ( "", [diffSide[0], side] ), position("", [diffSide[1], side]) ] ;
+			result= [ position ( "", [diffSide[0], side] ), position("", [diffSide[1], side]) ] ;
 		}
 		else{
-			return [ position ( "", [side, diffSide[0]] ), position("", [side, diffSide[1]]) ] ;
+			result= [ position ( "", [side, diffSide[0]] ), position("", [side, diffSide[1]]) ] ;
 		}
 
 	}
 
 	else{ //returns opposite corner
-		return [ position("", [ opp(pos.pos[2]), opp(pos.pos[3]) ] ) ];
+		result= [ position("", [ opp(pos.pos[2]), opp(pos.pos[3]) ] ) ];
 	}
+	if(result.length==0){
+		result = GAME.left;
+		console.log(GAME.left);
+	}
+	return result;
 
 }
 
@@ -128,7 +135,7 @@ function firstGo(){
 }
 
 function compTurn(){
-	var result = canWin(GAME.comp); //checks if comp can win in one move, and then makes that move.
+	var result = canWin(GAME.comp) || canWin(GAME.user); //checks if comp can win in one move, and then makes that move.
 	if(result){
 		markPosition(result, GAME.comp.color, GAME.comp.char);
 		GAME.comp.pos.push(result.pos);
@@ -145,8 +152,8 @@ function compTurn(){
 			GAME.comp.posObject.push(compPos);
 			write("Your turn!");
 		}
-		else if(GAME.stage==4){
-			compPos = canWin(GAME.user);
+		else if(GAME.stage>=4){
+			compPos = canWin(GAME.user) || canWin(GAME.comp, 2);
 			if(!compPos){
 				compPos = counterCorner(GAME.user.posObject[1]);
 				compPos = compPos[Math.floor(Math.random()*compPos.length)];
@@ -156,10 +163,10 @@ function compTurn(){
 			GAME.comp.posObject.push(compPos);
 			write("hmm, I think you're in truble!");
 		}
-		
+				
 	}	
 		
-	else {
+	else {				//if user decides to go first!
 
 	}
 	
@@ -170,7 +177,8 @@ function compTurn(){
 
 }
 
-function canWin(player){
+function canWin(player,turn){
+	if(!turn){turn =1;}
 	var numMatch=0;
 	var match = [];
 	var un;
@@ -182,7 +190,7 @@ function canWin(player){
 			if(pos.indexOf(WIN[i][j]) != -1){
 				match.push(WIN[i][j]);
 			}
-			if(match.length>=2){
+			if(match.length>=(3-turn)){
 				un = uncommon(WIN[i], match);
 				if(document.getElementById(un).value != "filled"){
 					return position(un);
