@@ -18,7 +18,6 @@ function deactive(bool){
 }
 
 function markPosition(pos, color, char){
-	console.log(pos);
 	var curr = document.getElementById(pos.pos);
 	curr.style.color = color;
 	curr.innerHTML = char;
@@ -138,32 +137,30 @@ function compTurn(){
 	}
 	else if(GAME.firstGo){
 		var compPos;
-		if(GAME.user.posObject[0].type == "edge"){
-			if(GAME.stage ==2){
-				compPos = counterCorner(GAME.user.posObject[0]);
+		if(GAME.stage ==2){
+			compPos = counterCorner(GAME.user.posObject[0]);
+			compPos = compPos[Math.floor(Math.random()*compPos.length)];
+			markPosition(compPos, GAME.comp.color, GAME.comp.char);
+			GAME.comp.pos.push(compPos.pos);
+			GAME.comp.posObject.push(compPos);
+			write("Your turn!");
+		}
+		else if(GAME.stage==4){
+			compPos = canWin(GAME.user);
+			if(!compPos){
+				compPos = counterCorner(GAME.user.posObject[1]);
 				compPos = compPos[Math.floor(Math.random()*compPos.length)];
-				markPosition(compPos, GAME.comp.color, GAME.comp.char);
-				GAME.comp.pos.push(compPos.pos);
-				GAME.comp.posObject.push(compPos);
-				write("Your turn!");
 			}
-			else if(GAME.stage==4){
-				compPos = canWin(GAME.user);
-				markPosition(compPos, GAME.comp.color, GAME.comp.char);
-				GAME.comp.pos.push(compPos.pos);
-				GAME.comp.posObject.push(compPos);
-				write("hmm, I think you're in truble!");
-
-			}
-
+			markPosition(compPos, GAME.comp.color, GAME.comp.char);
+			GAME.comp.pos.push(compPos.pos);
+			GAME.comp.posObject.push(compPos);
+			write("hmm, I think you're in truble!");
 		}
-		else{
+		
+	}	
+		
+	else {
 
-		}
-		if(GAME.stage == 2){}
-		else if(GAME.stage == 4){}
-		else if(GAME.stage == 6){}
-		else if(GAME.stage == 8){}
 	}
 	
 
