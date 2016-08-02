@@ -26,6 +26,7 @@ body{
 
 #content{
 	visibility: hidden;
+	position: fixed;
 }
 
 #game{
@@ -86,7 +87,40 @@ span{
 	text-align: center;
 }
 
-.choice:hover{
-	background-color: red;
+
+
+@media (max-width: 500px){
+	#notification{
+		width: 100%;
+	}
+	#game{
+		width: 90vw;
+		height: 90vw;
+
+	}
+
+	button{
+		width: 30vw;
+		height: 30vw;
+		font-size:30vw; 
+
+	}
+	#notification{
+		font-size: 1em;
+		line-height: 1em;
+	}
+}
+
+@media (max-width: 300px){
+	#initial{
+		width: 90vw;
+		min-height: 110vw;
+	}
+	#submit{
+		margin:10px 30vw 0px 30vw;
+		width: 30vw;
+		height: 50px;
+		font-size:1em; 
+}
 }
 

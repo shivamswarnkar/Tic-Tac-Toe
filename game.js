@@ -3,6 +3,9 @@
  *situation of the game.
 */ 
 
+
+
+
 function deactive(bool){
 	var places = document.getElementsByClassName("place");
 	for (var i=0;  i < places.length; ++i){
@@ -131,7 +134,7 @@ function diff(char){
 /*------AI--------*/
 
 
-/*---AI follows this algorithm when plays first*/
+/*---AI follows this algorithm to make a move*/
 function firstGo(){
 	var center = position();
 	markPosition(center, GAME.comp.color, GAME.comp.char); //center first mark
@@ -144,16 +147,15 @@ function compTurn(){
 		markPosition(result, GAME.comp.color, GAME.comp.char);
 		deactive(true);
 	}
-	else if(GAME.firstGo){
+	else if( (GAME.firstGo) && (GAME.stage ==2) ){
 		var compPos;
-		if(GAME.stage ==2){
-			compPos = counterCorner(GAME.user.posObject[0]);
-			compPos = compPos[Math.floor(Math.random()*compPos.length)];
-			markPosition(compPos, GAME.comp.color, GAME.comp.char);
-			write("Your turn!");
-		}
-				
+		compPos = counterCorner(GAME.user.posObject[0]);
+		compPos = compPos[Math.floor(Math.random()*compPos.length)];
+		markPosition(compPos, GAME.comp.color, GAME.comp.char);
+		write("Your turn "+GAME.user.name+"!");
 	}
+				
+	
 
 	else if(GAME.stage>=3){
 			compPos = canWin(GAME.user) || position(leftCorner())|| canWin(GAME.comp, 2);
@@ -163,7 +165,7 @@ function compTurn(){
 				compPos = compPos[Math.floor(Math.random()*compPos.length)];
 			}
 			markPosition(compPos, GAME.comp.color, GAME.comp.char);
-			write("hmm, I think you're in truble!");
+			write("hmm, I think you're in truble "+GAME.user.name+"!");
 		}
 
 	else {				//if user decides to go first!

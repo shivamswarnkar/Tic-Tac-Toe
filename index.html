@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Tic-Tac-Toe</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="script.js"></script>
@@ -13,7 +14,7 @@
 		<span id="welcome">Welcome! I'm Pearl, an AI desgined by Shivam.</span>
 		<span>Player: <input type="text" name="name" id="name"></span>
 		<span>You want to go? 
-    	<select name="game-avail">
+    	<select name="game-avail" id="go">
   			<option value="first" class="choice">First</option>
   			<option value="second" class="choice">Second</option>
   			<option value="radom" class="choice">Random</option>
@@ -21,7 +22,7 @@
 		</span>
 
 		<span>Your character? 
-    	<select name="char">
+    	<select name="char" id="user-char">
   			<option value="X">X</option>
   			<option value="O">O</option>
   			<option value="rand">Random</option>
