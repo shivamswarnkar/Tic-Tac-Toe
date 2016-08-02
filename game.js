@@ -3,14 +3,6 @@
  *situation of the game.
 */ 
 
-/*
-function start(){
-	console.log("working");;
-	document.getElementById("content").style.visibility = "visible";
-	document.getElementById("initial").style.visibility = "hidden";
-	play();
-}*/
-
 function deactive(bool){
 	var places = document.getElementsByClassName("place");
 	for (var i=0;  i < places.length; ++i){

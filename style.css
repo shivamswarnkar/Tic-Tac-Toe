@@ -15,9 +15,6 @@ body{
 	margin:auto;
 	margin-top: 10%;
 	border:1px solid white;
-	position: fixed;
-	top:200px;
-	left:40%;
 }
 
 #submit{
@@ -26,11 +23,11 @@ body{
 	height: 50px;
 	font-size:1em; 
 }
-/*
+
 #content{
 	visibility: hidden;
 }
-*/
+
 #game{
 	width: 300px;
 	height: 300px;
@@ -72,3 +69,24 @@ button{
 	margin-left: 47.5%;
 
 }
+
+span{
+	color:black;
+	font-style: bold;
+	font-size: 1.2em;
+	margin:auto;
+	display: block;
+	padding: 15px;
+}
+
+#welcome{
+	background-color: skyblue;
+	color:white;
+	font-size: .9em;
+	text-align: center;
+}
+
+.choice:hover{
+	background-color: red;
+}
+

@@ -4,12 +4,36 @@
 	<meta charset="utf-8">
 	<title>Tic-Tac-Toe</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="script.js"></script>
 	<script src="game.js"></script>
+	<script src="main.js"></script>
 </head>
 <body>
-	<!--<div id="initial">
-		<button id="submit" ondblclick="start()">Submit</button>
-	</div>-->
+	<div id="initial">
+		<span id="welcome">Welcome! I'm Pearl, an AI desgined by Shivam.</span>
+		<span>Player: <input type="text" name="name" id="name"></span>
+		<span>You want to go? 
+    	<select name="game-avail">
+  			<option value="first" class="choice">First</option>
+  			<option value="second" class="choice">Second</option>
+  			<option value="radom" class="choice">Random</option>
+		</select>
+		</span>
+
+		<span>Your character? 
+    	<select name="char">
+  			<option value="X">X</option>
+  			<option value="O">O</option>
+  			<option value="rand">Random</option>
+		</select>
+		</span>
+
+
+
+		<button id="submit" onclick="start()">Submit</button>
+
+
+	</div>
 		<div id="content">
 		<div id="game">
 		<button id="C_UL" class="place"onclick="mark(this)"></button>
@@ -29,8 +53,5 @@
 			Start
 		</button>
 	</div>	
-
-	<script scr="script.js"></script>
-	<script src="main.js"></script>
 <body>
 </html>
