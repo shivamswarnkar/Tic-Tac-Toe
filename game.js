@@ -66,8 +66,7 @@ function position(str, pos){ //pos should be an array
 
 		else{
 			newPos.type = "corner";
-			newPos.pos = 'C_' + pos[0][0].toUpperCase() + 
-			pos[1][0].toUpperCase();
+			newPos.pos = 'C_' + pos[0][0].toUpperCase() + pos[1][0].toUpperCase();
 		}
 	}
 
@@ -79,8 +78,8 @@ function position(str, pos){ //pos should be an array
 for given center.
 */
 function counterCorner(pos){
-	var result;
-	if(pos.type == "center"){result = [pos];}
+	var result = [];
+	if(pos.type == "center"){result.push(pos);}
 
 	else if(pos.type == "edge"){ //returns furthest corner
 		var side = opp(pos.pos[2]);  //sends L or R, gets opposite
@@ -95,14 +94,23 @@ function counterCorner(pos){
 	}
 
 	else{ //returns opposite corner
-		result= [ position("", [ opp(pos.pos[2]), opp(pos.pos[3]) ] ) ];
+		var side = opp(pos.pos[2]);
+		if(side=="L" || side=="R"){
+			result = [ position("", [ opp(pos.pos[3]), opp(pos.pos[2]) ] ) ];
+			
+
+		} 
+		else{
+			result = [ position("", [ opp(pos.pos[2]), opp(pos.pos[3]) ] ) ];
+
+		}
 	}
 	if(result.length==0){
 		result = GAME.left;
 		console.log(GAME.left);
 	}
 	for(var i=0; i<result.length; ++i){
-		if(GAME.left.indexOf(result[i]) == -1){
+		if(GAME.left.indexOf(result[i].pos) == -1){
 			result.splice(i,1);
 		}
 	}
@@ -158,10 +166,16 @@ function compTurn(){
 	
 
 	else if(GAME.stage>=3){
-			compPos = canWin(GAME.user) || position(leftCorner())|| canWin(GAME.comp, 2);
+			compPos = canWin(GAME.user);
+			var leftC = leftCorner();
+			if(leftC){
+				comPos = position(leftC);
+			}
+			else{
+				compPos = canWin(GAME.comp, 2);
+			}
 			if(!compPos){
 				compPos = counterCorner(GAME.user.posObject[1]);
-				console.log(compPos);
 				compPos = compPos[Math.floor(Math.random()*compPos.length)];
 			}
 			markPosition(compPos, GAME.comp.color, GAME.comp.char);
