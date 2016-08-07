@@ -115,6 +115,7 @@ function mark(curr, user){
 		else if(GAME.left<1){
 			write("Seems like it's a tie " +GAME.user.name);
 			deactive(true);
+			return; //stop the game!
 
 		}
 		else{
