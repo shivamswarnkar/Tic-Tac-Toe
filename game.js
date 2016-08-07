@@ -150,13 +150,12 @@ function firstGo(){
 }
 
 function compTurn(){
-	var result = canWin(GAME.comp) || canWin(GAME.user); //checks if comp can win in one move, and then makes that move.
-	if(result){
-		markPosition(result, GAME.comp.color, GAME.comp.char);
+	var compPos = canWin(GAME.comp) || canWin(GAME.user); //checks if comp can win in one move, and then makes that move.
+	if(compPos){
+		markPosition(compPos, GAME.comp.color, GAME.comp.char);
 		deactive(true);
 	}
 	else if( (GAME.firstGo) && (GAME.stage ==2) ){
-		var compPos;
 		compPos = counterCorner(GAME.user.posObject[0]);
 		compPos = compPos[Math.floor(Math.random()*compPos.length)];
 		markPosition(compPos, GAME.comp.color, GAME.comp.char);
@@ -169,7 +168,7 @@ function compTurn(){
 			compPos = canWin(GAME.user);
 			var leftC = leftCorner();
 			if(leftC){
-				comPos = position(leftC);
+				compPos = position(leftC);
 			}
 			else{
 				compPos = canWin(GAME.comp, 2);
