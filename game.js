@@ -166,8 +166,13 @@ function compTurn(){
 
 	else if(GAME.stage>=3){
 			compPos = canWin(GAME.user);
-			var leftC = leftCorner();
-			if(leftC){
+			var leftC = left("C_");
+			if( (numCorners(GAME.left)==2) && (hasOppCorn(GAME.user.pos)) ) {
+				console.log("here");
+				compPos = position(left("E_"));
+
+			}
+			else if(leftC){
 				compPos = position(leftC);
 			}
 			else{
@@ -187,7 +192,7 @@ function compTurn(){
 				markPosition(position(), GAME.comp.color, GAME.comp.char);
 			}
 			else{
-				markPosition(position(leftCorner()), GAME.comp.color, GAME.comp.char);
+				markPosition(position(left("C_")), GAME.comp.color, GAME.comp.char);
 			}
 		}
 	}
@@ -234,11 +239,43 @@ function uncommon(x, y){//x length should be greater or equal than y
 }
 
 //reutrns any random left corner
-function leftCorner(){
+function left(posChar){
 	for(var i=0; i < GAME.left.length; ++i){
-		if(GAME.left[i].includes("C_")){
+		if(GAME.left[i].includes(posChar)){
 			return GAME.left[i];
 		}
 	}
 	return null;
+}
+
+//returns numbers of corners
+function numCorners(lst) {
+	var num =0;
+	for(var i=0; i < lst.length; ++i){
+		if(lst[i].includes("C_")){
+			num +=1;
+		}
+	}
+	return num;
+}
+
+//tests whether lst contains two opposite corners
+function hasOppCorn(lst){
+	for(var i=0; i<lst.length; i++){
+		if(lst[i].includes("C_")){
+			var result;
+			var side = opp(lst[i][2]);
+			if(side=="L" || side=="R"){
+				result = position("", [ opp(lst[i][3]), opp(lst[i][2]) ] );
+			} 
+			else{
+				result = position("", [ opp(lst[i][2]), opp(lst[i][3]) ] );
+			}
+			if(lst.includes(result.pos)) {
+				return true;
+			}
+		}
+	}
+	return false;
+
 }
